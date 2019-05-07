@@ -14,7 +14,7 @@
     "/fulfillment/digitalgoods/orders/{partnerOrderNumber}" : {
       "put" : {
         "tags" : [ "DigitalGoods" ],
-        "summary" : "Digital Goods Fulfillment Status Update. (Auth policies: DigitalGoodsFulfiller)",
+        "summary" : "Digital Goods Fulfillment Status Update. (Auth policies: OrderFulfiller)",
         "operationId" : "FulfillDigitalGoods",
         "consumes" : [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
         "produces" : [ "text/plain", "application/json", "text/json" ],
@@ -67,7 +67,7 @@
           }
         },
         "security" : [ {
-          "OAuth2" : [ "DigitalGoodsFulfiller" ]
+          "OAuth2" : [ "OrderFulfiller" ]
         } ]
       }
     }
@@ -78,7 +78,7 @@
       "tokenUrl" : "https://costcofulfillment.azurewebsites.net/token",
       "flow" : "application",
       "scopes" : {
-        "DigitalGoodsFulfiller" : "Can perform operations associated with the fulfillment of digital goods"
+        "OrderFulfiller" : "Can perform operations to fulfill orders captured by Costco"
       }
     }
   },

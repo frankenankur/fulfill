@@ -32,7 +32,7 @@ namespace IO.Swagger.Controllers
     public class DigitalGoodsApiController : Controller
     { 
         /// <summary>
-        /// Digital Goods Fulfillment Status Update. (Auth policies: DigitalGoodsFulfiller)
+        /// Digital Goods Fulfillment Status Update. (Auth policies: OrderFulfiller)
         /// </summary>
         
         /// <param name="partnerOrderNumber">The partner order number.</param>
