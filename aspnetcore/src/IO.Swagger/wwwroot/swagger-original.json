@@ -85,7 +85,7 @@
               }
             },
             "schema" : {
-              "$ref" : "#/definitions/ApiExceptionResponse"
+              "$ref" : "#/definitions/Error"
             }
           },
           "500" : {
@@ -151,7 +151,7 @@
       },
       "description" : "LineItem for an order"
     },
-    "ApiExceptionResponse" : {
+    "Error" : {
       "type" : "object",
       "required" : [ "trackingId" ],
       "properties" : {

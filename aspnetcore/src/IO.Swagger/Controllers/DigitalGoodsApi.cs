@@ -47,7 +47,7 @@ namespace IO.Swagger.Controllers
         [ValidateModelState]
         [SwaggerOperation("FulfillDigitalGoods")]
         [SwaggerResponse(statusCode: 200, type: typeof(InlineResponse200), description: "Status 200")]
-        [SwaggerResponse(statusCode: 400, type: typeof(ApiExceptionResponse), description: "Status 400")]
+        [SwaggerResponse(statusCode: 400, type: typeof(Error), description: "Status 400")]
         [SwaggerResponse(statusCode: 500, type: typeof(GatewayError), description: "Status 500")]
         public virtual IActionResult FulfillDigitalGoods([FromRoute][Required]string partnerOrderNumber, [FromHeader][Required()]string costcoTrackingId, [FromBody]List<LineItem> lineItems, [FromHeader]string costcoEnv)
         { 
@@ -55,7 +55,7 @@ namespace IO.Swagger.Controllers
             // return StatusCode(200, default(InlineResponse200));
 
             //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400, default(ApiExceptionResponse));
+            // return StatusCode(400, default(Error));
 
             //TODO: Uncomment the next line to return response 500 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(500, default(GatewayError));
