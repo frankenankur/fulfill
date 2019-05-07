@@ -51,18 +51,52 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "Success"
+            "description" : "Status 200",
+            "headers" : {
+              "costco.TrackingId" : {
+                "type" : "string",
+                "description" : "Unique ID to Correlate HTTP requests between a client and server."
+              }
+            },
+            "schema" : {
+              "type" : "object",
+              "required" : [ "lineItems", "result" ],
+              "properties" : {
+                "result" : {
+                  "type" : "string",
+                  "default" : "ok",
+                  "enum" : [ "ok", "okWithException" ]
+                },
+                "lineItems" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/definitions/inline_response_200_lineItems"
+                  }
+                }
+              }
+            }
           },
           "400" : {
-            "description" : "Bad Request",
+            "description" : "Status 400",
+            "headers" : {
+              "costco.trackingId" : {
+                "type" : "string",
+                "description" : "Unique ID to Correlate HTTP requests between a client and server."
+              }
+            },
             "schema" : {
               "$ref" : "#/definitions/ApiExceptionResponse"
             }
           },
           "500" : {
-            "description" : "Server Error",
+            "description" : "Status 500",
+            "headers" : {
+              "costco.trackingId" : {
+                "type" : "string"
+              }
+            },
             "schema" : {
-              "$ref" : "#/definitions/ApiExceptionResponse"
+              "$ref" : "#/definitions/GatewayError"
             }
           }
         },
@@ -141,6 +175,109 @@
         "source" : {
           "type" : "string",
           "readOnly" : true
+        },
+        "trackingId" : {
+          "type" : "string"
+        }
+      }
+    },
+    "GatewayError" : {
+      "type" : "object",
+      "properties" : {
+        "context" : {
+          "$ref" : "#/definitions/GatewayError_context"
+        }
+      }
+    },
+    "inline_response_200_lineItems" : {
+      "required" : [ "itemNumber", "lineProcessingStatus", "quantity" ],
+      "properties" : {
+        "lineProcessingStatus" : {
+          "type" : "string",
+          "enum" : [ "invalidItem", "invalidLineQuantity", "invalidLineStatus" ]
+        },
+        "itemNumber" : {
+          "type" : "number",
+          "description" : "The Costco item number to be fulfilled"
+        },
+        "quantity" : {
+          "type" : "number",
+          "description" : "The quantity of units to be fulfilled"
+        }
+      },
+      "example" : {
+        "itemNumber" : 0.80082819046101150206595775671303272247314453125,
+        "quantity" : 6.02745618307040320615897144307382404804229736328125,
+        "lineProcessingStatus" : "invalidItem"
+      }
+    },
+    "inline_response_200" : {
+      "required" : [ "lineItems", "result" ],
+      "properties" : {
+        "result" : {
+          "type" : "string",
+          "default" : "ok",
+          "enum" : [ "ok", "okWithException" ]
+        },
+        "lineItems" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/inline_response_200_lineItems"
+          }
+        }
+      },
+      "example" : {
+        "result" : "ok",
+        "lineItems" : [ {
+          "itemNumber" : 0.80082819046101150206595775671303272247314453125,
+          "quantity" : 6.02745618307040320615897144307382404804229736328125,
+          "lineProcessingStatus" : "invalidItem"
+        }, {
+          "itemNumber" : 0.80082819046101150206595775671303272247314453125,
+          "quantity" : 6.02745618307040320615897144307382404804229736328125,
+          "lineProcessingStatus" : "invalidItem"
+        } ]
+      }
+    },
+    "GatewayError_context_statusMessage_descriptions" : {
+      "properties" : {
+        "value" : {
+          "type" : "string"
+        },
+        "localeCode" : {
+          "type" : "string"
+        }
+      }
+    },
+    "GatewayError_context_statusMessage" : {
+      "properties" : {
+        "statusCode" : {
+          "type" : "string"
+        },
+        "errorCode" : {
+          "type" : "string"
+        },
+        "descriptions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/GatewayError_context_statusMessage_descriptions"
+          }
+        }
+      }
+    },
+    "GatewayError_context" : {
+      "properties" : {
+        "statusMessage" : {
+          "$ref" : "#/definitions/GatewayError_context_statusMessage"
+        },
+        "messageName" : {
+          "type" : "string"
+        },
+        "timestamp" : {
+          "type" : "string"
+        },
+        "sendingApplication" : {
+          "type" : "string"
         },
         "trackingId" : {
           "type" : "string"
