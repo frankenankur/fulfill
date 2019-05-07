@@ -8,13 +8,13 @@
   "basePath" : "/shipments/v1",
   "schemes" : [ "https" ],
   "security" : [ {
-    "Bearer" : [ ]
+    "OAuth2" : [ ]
   } ],
   "paths" : {
     "/fulfillment/digitalgoods/orders/{partnerOrderNumber}" : {
       "put" : {
         "tags" : [ "DigitalGoods" ],
-        "summary" : "Digital Goods Fulfillment Status Update. (Auth policies: OrderFulfiller)",
+        "summary" : "Digital Goods Fulfillment Status Update. (Auth policies: DigitalGoodsFulfiller)",
         "operationId" : "FulfillDigitalGoods",
         "consumes" : [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
         "produces" : [ "text/plain", "application/json", "text/json" ],
@@ -65,16 +65,21 @@
               "$ref" : "#/definitions/ApiExceptionResponse"
             }
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "DigitalGoodsFulfiller" ]
+        } ]
       }
     }
   },
   "securityDefinitions" : {
-    "Bearer" : {
-      "description" : "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-      "type" : "apiKey",
-      "name" : "authorization",
-      "in" : "header"
+    "OAuth2" : {
+      "type" : "oauth2",
+      "tokenUrl" : "https://costcofulfillment.azurewebsites.net/token",
+      "flow" : "application",
+      "scopes" : {
+        "DigitalGoodsFulfiller" : "Can perform operations associated with the fulfillment of digital goods"
+      }
     }
   },
   "definitions" : {
